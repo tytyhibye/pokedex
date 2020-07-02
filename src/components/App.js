@@ -1,12 +1,12 @@
 import React from 'react';
 import Header from './Header';
-import LogControl from './LogControl';
+import EntryControl from './EntryControl';
 
 function App() {
   return (
     <>
       <Header />
-      <LogControl />
+      <EntryControl />
     </>
   );
 }

@@ -1,10 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-function Log(props) {
+function Entry(props) {
   return (
     <React.Fragment>
-      <div onClick={() => props.whenLogClicked(props.id)}>
+      <div onClick={() => props.whenEntryClicked(props.id)}>
         <h3>Name: {props.name}</h3>
         {/* - Type: {props.type} */}
         {/* <p><em>Level: {props.level}</em></p>
@@ -16,14 +16,15 @@ function Log(props) {
   );
 }
 
-Log.propTypes = {
+Entry.propTypes = {
   name: PropTypes.string.isRequired,
+  type: PropTypes.string,
   level: PropTypes.number,
   location: PropTypes.string,
-  type: PropTypes.string,
+  description: PropTypes.string,
   id: PropTypes.string,
-  whenLogClicked: PropTypes.func
+  whenEntryClicked: PropTypes.func
 };
 
 
-export default Log;
+export default Entry;
