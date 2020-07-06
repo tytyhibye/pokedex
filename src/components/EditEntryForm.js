@@ -7,7 +7,7 @@ function EditEntryForm(props) {
 
   function handleEditEntryFormSubmission(event) {
     event.preventDefault();
-    props.onEditEntry({ name: event.target.name.value, location: event.target.location.value, type: event.target.type.value, description: event.target.description.value, level: event.target.level.value, id: entry.id });
+    props.onEditEntry({ name: event.target.name.value, location: event.target.location.value, pokemonType: event.target.pokemonType.value, description: event.target.description.value, level: event.target.level.value, id: entry.id });
   }
 
   return (

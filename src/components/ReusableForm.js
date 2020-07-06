@@ -8,11 +8,11 @@ function ReusableForm(props) {
         <input
           type='text'
           name='name'
-          placeholder='Poke Name' />
+          placeholder='Poke-Name' />
         <input
           type='text'
-          name='type'
-          placeholder='Type' />
+          name='pokemonType'
+          placeholder='Pokemon Type' />
         <input
           type='number'
           name='level'

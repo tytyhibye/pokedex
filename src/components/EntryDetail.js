@@ -7,7 +7,7 @@ function EntryDetail(props) {
     <React.Fragment>
       <h1>Details</h1>
       <h3>Name: {entry.name}</h3>
-      <p>Type: {entry.type}</p>
+      <p>Pokemon Type: {entry.pokemonType}</p>
       <p>Level: {entry.level}</p>
       <p>Location: {entry.location}</p>
       <p>Description: {entry.description}</p>

@@ -3,6 +3,8 @@ import NewEntryForm from "./NewEntryForm";
 import EntryList from "./EntryList";
 import EntryDetail from "./EntryDetail";
 import EditEntryForm from './EditEntryForm';
+import { connect } from 'react-redux';
+import PropTypes from "prop-types";
 
 
 class EntryControl extends React.Component {
@@ -11,7 +13,6 @@ class EntryControl extends React.Component {
     super(props);
     this.state = {
       formVisibleOnPage: false,
-      masterEntryList: [],
       counter: 0,
       selectedEntry: null,
       editing: false
@@ -19,19 +20,37 @@ class EntryControl extends React.Component {
   }
 
   handleChangingSelectedEntry = (id) => {
-    const selectedEntry = this.state.masterEntryList.filter(entry => entry.id === id)[0];
+    const selectedEntry = this.props.masterEntryList[id];
     this.setState({ selectedEntry: selectedEntry });
   }
 
   handleAddingNewEntryToList = (newEntry) => {
-
-    const newMasterEntryList = this.state.masterEntryList.concat(newEntry);
-    this.setState({
-      masterEntryList: newMasterEntryList,
-      counter: 0
-    });
+    const { dispatch } = this.props;
+    const { name, pokemonType, level, location, description, id} = newEntry;
+    const action = {
+      type: 'ADD_POKEMON',
+      id: id,
+      name: name,
+      pokemonType: pokemonType,
+      level: level,
+      location: location,
+      description: description,
+    }
+    dispatch(action);
+    this.setState({ formVisibleOnPage: false, counter: 0 });
   }
+      
+   
 
+      // masterEntryList: newMasterEntryList,
+      // counter: 0
+ 
+  // decreaseCount = () => {
+  //   if(this.state.count <=10){
+
+  //   }
+  //   this.setState({ count: this.state.count -1 });
+  // }
   handleClick = () => {
     if (this.state.selectedEntry != null) {
       this.setState({
@@ -52,12 +71,20 @@ class EntryControl extends React.Component {
   }
 
   handleEditingEntryInList = (entryToEdit) => {
-    const editedMasterEntryList = this.state.masterEntryList
-      .filter(entry => entry.id !== this.state.selectedEntry.id)
-      .concat(entryToEdit);
+    const { dispatch } = this.props;
+    const { id, name, location, level, description, pokemonType } = entryToEdit;
+    const action = {
+      type: 'ADD_POKEMON',
+      id: id,
+      name: name,
+      pokemonType: pokemonType,
+      level: level,
+      location: location,
+      description: description,
+    }
+    dispatch(action);
     this.setState({
-      masterEntryList: editedMasterEntryList,
-      editing: false,
+      editing: false, 
       selectedEntry: null
     });
   }
@@ -68,18 +95,20 @@ class EntryControl extends React.Component {
   }
 
   handleDeletingEntry = (id) => {
-    const newMasterEntryList = this.state.masterEntryList.filter(entry => entry.id !== id);
-    this.setState({
-      masterEntryList: newMasterEntryList,
-      selectedEntry: null
-    });
-  }
+    const { dispatch } = this.props;
+    const action = {
+    type: 'DELETE_POKEMON',
+    id: id
+    }
+    dispatch(action);
+    this.setState({selectedEntry: null});
+  };
 
-  render() {
+  render() { 
     let currentlyVisibleState = null;
     let buttonText = null;
 
-    if (this.state.editing) {
+    if (this.state.editing) { // possible prop needed
       currentlyVisibleState = <EditEntryForm entry={this.state.selectedEntry} onEditEntry={this.handleEditingEntryInList} />
       buttonText = "Return to Entry List";
     }
@@ -94,10 +123,11 @@ class EntryControl extends React.Component {
     } else if (this.state.counter === 0) {
       currentlyVisibleState =
         <EntryList
-          entryList={this.state.masterEntryList}
+          entryList={this.props.masterEntryList}
           onEntrySelection={this.handleChangingSelectedEntry}
+          // onClickingDecrement={this.decreaseCount}
         />
-      buttonText = "Add Entry!";
+      buttonText = "Add New Pokemon!";
     } else if (this.state.counter === 1) {
       currentlyVisibleState =
         <NewEntryForm
@@ -114,5 +144,17 @@ class EntryControl extends React.Component {
     );
   }
 }
+
+EntryControl.propTypes = {
+  masterTicketList: PropTypes.object
+};
+
+ const mapStateToProps = state => {
+   return {
+     masterEntryList: state
+   }
+ } 
+
+EntryControl = connect(mapStateToProps)(EntryControl);
 
 export default EntryControl;

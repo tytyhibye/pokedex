@@ -13,7 +13,7 @@ function NewEntryForm(props) {
   );
   function handleNewEntryFormSubmission(event) {
     event.preventDefault();
-    props.onNewEntryCreation({ name: event.target.name.value, location: event.target.location.value, type: event.target.type.value, level: event.target.level.value, description: event.target.description.value, id: v4() });
+    props.onNewEntryCreation({ name: event.target.name.value, location: event.target.location.value, pokemonType: event.target.pokemonType.value, level: event.target.level.value, description: event.target.description.value, id: v4() });
   }
 }
 NewEntryForm.propTypes = {
